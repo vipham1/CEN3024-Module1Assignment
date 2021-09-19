@@ -36,9 +36,9 @@ public class TextAnalyzer {
         // Puts poemMap in a set
         Set<Map.Entry<String, Integer>> poemSet = poemMap.entrySet(); 
 
-        // Create a wordList from the poemSet to compare
-        List<Map.Entry<String, Integer>> wordList = new ArrayList<Map.Entry<String, Integer>>(poemSet);
-        Collections.sort( wordList, new Comparator<Map.Entry<String, Integer>>() {
+        // Create a list for the words from the poemSet to compare the counts
+        List<Map.Entry<String, Integer>> list = new ArrayList<Map.Entry<String, Integer>>(poemSet);
+        Collections.sort( list, new Comparator<Map.Entry<String, Integer>>() {
         	// Sort by descending count values
             public int compare( Map.Entry<String, Integer> a, Map.Entry<String, Integer> b ) {
                 return (b.getValue()).compareTo( a.getValue() ); 
@@ -48,7 +48,7 @@ public class TextAnalyzer {
         // Output Results
         int numCount = 1;
         //loop to go through eat key(word) and value(count) in wordList
-        for(Map.Entry<String, Integer> i:wordList) {
+        for(Map.Entry<String, Integer> i:list) {
             if(numCount <= 20) {
                 System.out.println(i.getKey() + ": " + i.getValue());
                 numCount++;
