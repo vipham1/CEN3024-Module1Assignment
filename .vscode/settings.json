@@ -1,6 +1,9 @@
 {
   "java.project.referencedLibraries": [
     "lib/**/*.jar",
-    "c:\\Users\\vitu1\\Downloads\\jsoup-1.14.2.jar"
+    "c:\\Users\\vitu1\\Downloads\\jsoup-1.14.2.jar",
+    "c:\\Users\\vitu1\\Downloads\\junit-4.13.2.jar",
+    "c:\\Users\\vitu1\\Downloads\\junit-platform-console-standalone-1.8.1.jar",
+    "c:\\Users\\vitu1\\Downloads\\hamcrest-core-1.3.jar"
   ]
 }
