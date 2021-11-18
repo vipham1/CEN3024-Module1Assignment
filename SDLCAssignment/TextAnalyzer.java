@@ -6,12 +6,15 @@ import java.io.*;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 /**
- * @author Vivian Pham
+ * TextAnalyzer is the class to generate the top 20 words from a poem
+ * @author VivianPham
+ * @version 1.0
  */
 
 public class TextAnalyzer {
 	
     /** 
+     * Main method
      * @param args
      * @throws IOException
      */
