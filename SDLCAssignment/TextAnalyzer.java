@@ -5,10 +5,18 @@ import java.util.*;
 import java.io.*;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+/**
+ * @author Vivian Pham
+ */
 
 public class TextAnalyzer {
-	public static void main(String[] args) throws IOException {
-		// Open and scan url then jsoup and scan through actual poem
+	
+    /** 
+     * @param args
+     * @throws IOException
+     */
+    public static void main(String[] args) throws IOException {
+		/** Open and scan url then jsoup and scan through actual poem*/
         URL url = new URL("https://www.gutenberg.org/files/1065/1065-h/1065-h.htm");
         Scanner urlScan = new Scanner(url.openStream());
         String html = urlScan.useDelimiter("\\A").next();
@@ -16,15 +24,15 @@ public class TextAnalyzer {
         String poem = doc.select("h1,p").text().replaceAll("[^a-zA-Z '-]", "").toLowerCase();
 		Scanner poemScan = new Scanner(poem);
         
-		// Create Hashmap to store words and instance count
+		/** Create Hashmap to store words and instance count*/
         HashMap<String,Integer> poemMap = new HashMap<String, Integer>(); 
         while (poemScan.hasNext()) {   
             String word = poemScan.next();
-            // If word is not read in poem yet add a value of 1 (this makes sures there are no 0's)
+            /**If word is not read in poem yet add a value of 1 (this makes sures there are no 0's) */ 
             if(poemMap.containsKey(word) == false) {
             	poemMap.put(word,1);
             }
-            // else if word is present remove the previous key and replace with new key, then increase the count
+            /**else if word is present remove the previous key and replace with new key, then increase the count */ 
             else {
                 int count = (int)(poemMap.get(word));
                 poemMap.remove(word);  
@@ -33,21 +41,23 @@ public class TextAnalyzer {
         } 
         poemScan.close();
         
-        // Puts poemMap in a set
+        /**Puts poemMap in a set */
         Set<Map.Entry<String, Integer>> poemSet = poemMap.entrySet(); 
 
-        // Create a wordList from the poemSet to compare
+        /**Create a wordList from the poemSet to compare */
         List<Map.Entry<String, Integer>> wordList = new ArrayList<Map.Entry<String, Integer>>(poemSet);
         Collections.sort( wordList, new Comparator<Map.Entry<String, Integer>>() {
-        	// Sort by descending count values
+        	/**Sort by descending count values */
             public int compare( Map.Entry<String, Integer> a, Map.Entry<String, Integer> b ) {
                 return (b.getValue()).compareTo( a.getValue() ); 
             }
         });
         
-        // Output Results
         int numCount = 1;
-        //loop to go through eat key(word) and value(count) in wordList
+        /**
+         * loop to go through eat key(word) and value(count) in wordList
+         * @return the results 
+        */
         for(Map.Entry<String, Integer> i:wordList) {
             if(numCount <= 20) {
                 System.out.println(i.getKey() + ": " + i.getValue());
