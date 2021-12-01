@@ -1,6 +1,10 @@
 package SDLCAssignment;
 
 import java.net.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.*;
 import java.io.*;
 import org.jsoup.Jsoup;
@@ -16,9 +20,9 @@ public class TextAnalyzer {
     /** 
      * Main method
      * @param args
-     * @throws IOException
+     * @throws Exception
      */
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws Exception {
 		/** Open and scan url then jsoup and scan through actual poem*/
         URL url = new URL("https://www.gutenberg.org/files/1065/1065-h/1065-h.htm");
         Scanner urlScan = new Scanner(url.openStream());
@@ -63,9 +67,45 @@ public class TextAnalyzer {
         */
         for(Map.Entry<String, Integer> i:wordList) {
             if(numCount <= 20) {
+
                 System.out.println(i.getKey() + ": " + i.getValue());
                 numCount++;
             }
         }
+
+        getResult();
 	}
+
+    public static ResultSet getResult() throws Exception {
+        Connection conn = getConnection();
+        PreparedStatement data = conn.prepareStatement("SELECT word, frequency FROM wordFreq");
+
+        ResultSet result = data.executeQuery();
+
+        while(result.next()){
+            System.out.println(result.getString("word")+":"+result.getString("frequency"));
+        }
+        return result;
+    }
+
+    public static void createTable() throws Exception{
+        Connection conn = getConnection();
+        PreparedStatement create = conn.prepareStatement("CREATE TABLE IF NOT EXISTS wordFreq(word varchar(255), frequency int)");
+        create.executeUpdate();
+    }
+
+    public static Connection getConnection() throws Exception{
+        try{
+        String driver = "com.mysql.jdbc.Driver";
+        String url = "jdbc:mysql://localhost:3306/word_occurences";
+        String username = "root";
+        String password = "dn35wxzvb";
+        Class.forName(driver);
+        
+        Connection conn = DriverManager.getConnection(url,username,password);
+        System.out.println("Connected");
+        return conn;}
+        catch(Exception e){System.out.println(e);}
+        return null;
+    }
 }
