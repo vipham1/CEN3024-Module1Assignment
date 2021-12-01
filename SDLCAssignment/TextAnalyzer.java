@@ -67,8 +67,9 @@ public class TextAnalyzer {
         */
         for(Map.Entry<String, Integer> i:wordList) {
             if(numCount <= 20) {
-
-                System.out.println(i.getKey() + ": " + i.getValue());
+                Connection conn = getConnection();
+                PreparedStatement insertIn = conn.prepareStatement("INSERT INTO wordfreq(word, frequency) VALUES ('"+i.getKey()+"', '"+i.getValue()+"')");
+                insertIn.executeUpdate();
                 numCount++;
             }
         }
